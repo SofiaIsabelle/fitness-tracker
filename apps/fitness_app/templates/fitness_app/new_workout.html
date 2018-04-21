@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dojo Fitness</title>
+</head>
+<body>
+    <h1>Add a workout session</h1>
+    <fieldset>
+        <legend>New workout</legend>
+        <form action="/add_workout" method="post">
+            {% csrf_token %}
+            <p>Duration: <input type="number" name="duration" placeholder="duration"></p>
+            <p>
+                Units:
+                <select name="units">
+                    <optgroup label="time">
+                        <option>Minutes</option>
+                        <option>Hours</option>
+                    </optgroup>
+                    <optgroup label="count">
+                        <option>Reps</option>
+                        <option>Rounds</option>
+                        <option>Count</option>
+                    </optgroup>
+                    <optgroup label="distance">
+                        <option>Miles</option>
+                        <option>Kilometers</option>
+                    </optgroup>
+                </select>
+            </p>
+            <p>
+                Start: <input type="date" name="start_date"><input type="time" name="start_time">
+            </p>
+            <p>
+                Activity:
+                <select name="activity">
+                    {% for activity in activities %}
+                        <option value="{{activity.id}}">{{activity.name}}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <button type="submit">Add a workout session</button>
+        </form>
+    </fieldset>
+   
+</body>
+</html>

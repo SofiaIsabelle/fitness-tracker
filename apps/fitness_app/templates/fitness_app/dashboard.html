@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dojo Fitness</title>
+</head>
+<body>
+    <h1>Dojo Fitness</h1>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li
+            {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- {{ request.session.user_id }} -->
+
+    <a href="/logout"><button>Logout</button></a>
+
+    <p>Your BMI: {{bmi}}</p>
+    <!-- Your workouts -->
+    <h1>{{user.username}}'s Workouts</h1>
+
+    {% if user_workouts|length == 0 %}
+        <p>You don't have any workouts yet!</p>
+    {% else %}
+        <table border=1>
+            <tr>
+                <th>Activity</th>
+                <th>Amount</th>
+                <th>Start</th>
+            </tr>
+            {% for work in user_workouts %}
+                <tr>
+                    <td>{{work.activity.name}}</td>
+                    <td>{{work.duration}} {{work.units}}</td>
+                    <td>{{work.start}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <p><a href="/new_workout"><button>Add a workout session</button></a></p>
+
+    <!-- Other's workouts -->
+    <h1>Other Workouts</h1>
+
+    <table border=1>
+        <tr>
+            <th>Username</th>
+            <th>Follow?</th>
+            <th>Activity</th>
+            <th>Amount</th>
+            <th>Start</th>
+        </tr>
+        {% for work in other_workouts %}
+            <tr>
+                <td>{{work.user.username}}</td>
+                <td><a href="/follow/{{work.user.id}}"><button>Follow this user</button></a></td>
+                <td>{{work.activity.name}}</td>
+                <td>{{work.duration}} {{work.units}}</td>
+                <td>{{work.start}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h1>You are following</h1>
+    <table border=1>
+        <tr>
+            <th>Followed Users</th>
+            <th>Number of Workouts</th>
+        </tr>
+        {% for user in user.followed_users.all%}
+            <tr>
+                <td>{{user.username}}</td>
+                <td>{{user.workouts.all|length}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

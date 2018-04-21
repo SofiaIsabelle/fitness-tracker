@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dojo Fitness</title>
+    <style>
+        .col {
+            width: 500px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .error {
+            color: #f00;
+            font-weight: bold;
+        }
+
+        .success {
+            color: #090;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Dojo Fitness</h1>
+    
+    <fieldset class="col">
+        <legend>Register</legend>
+        <form action="/register" method="post">
+            {% csrf_token %}
+            <p>Name: <input type="text" name="name" placeholder="Your name"></p>
+            <p>Username: <input type="text" name="username" placeholder="Your username"></p>
+            <p>Email: <input type="text" name="email" placeholder="Your email"></p>
+            <p>Date of Birth: <input type="date" name="dob"></p>
+            <p><abbr title="your height in inches">Height:</abbr> <input type="number" name="height" min=24> <em>(your height in inches)</em></p>
+            <p><abbr title="your weight in pounds">Weight:</abbr> <input type="number" name="weight" min=30> <em>(your weight in pounds)</em></p>
+            <p>Password: <input type="password" name="password" placeholder="Your password"></p>
+            <p>Confirm: <input type="password" name="confirm" placeholder="Confirm password"></p>
+            <button type="submit">Register</button>
+        </form>
+    </fieldset>
+
+    <fieldset class="col">
+        <legend>Login</legend>
+        <form action="/login" method="post">
+            {% csrf_token %}
+            <p>Email: <input type="text" name="email" placeholder="Your email"></p> 
+            <p>Password: <input type="password" name="password" placeholder="Your password"></p>
+            <button type="submit">Login</button>
+        </form>
+    </fieldset>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li
+            {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+</body>
+</html>
